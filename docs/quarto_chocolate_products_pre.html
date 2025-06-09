@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="quarto_chocolate_products_pre_files/libs/clipboard/clipboard.min.js"></script>
+<script src="quarto_chocolate_products_pre_files/libs/quarto-html/tabby.min.js"></script>
+<script src="quarto_chocolate_products_pre_files/libs/quarto-html/popper.min.js"></script>
+<script src="quarto_chocolate_products_pre_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="quarto_chocolate_products_pre_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="quarto_chocolate_products_pre_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="quarto_chocolate_products_pre_files/libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.7.31">
+
+  <meta name="dcterms.date" content="2025-06-06">
+  <title>Chocolate Products Scraping Project</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="quarto_chocolate_products_pre_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="quarto_chocolate_products_pre_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="quarto_chocolate_products_pre_files/libs/revealjs/dist/theme/quarto-8a5cdbf101a0845817b98f2425171703.css">
+  <link href="quarto_chocolate_products_pre_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="quarto_chocolate_products_pre_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="quarto_chocolate_products_pre_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="quarto_chocolate_products_pre_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Chocolate Products Scraping Project</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Igihozo_cynthia 
+</div>
+</div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Uwiwe_Jedid_Jah 
+</div>
+</div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Mbabazi_Jane 
+</div>
+</div>
+</div>
+
+  <p class="date">2025-06-06</p>
+</section>
+<section id="introduction" class="slide level2">
+<h2>Introduction</h2>
+<p>In this project, we scraped chocolate product data from <a href="https://www.chocolate.co.uk">chocolate.co.uk</a>, cleaned the data, and performed simple analysis using Python.</p>
+<p>We followed 3 main steps: - Scraping Data - Cleaning Data - Data Analysis</p>
+</section>
+<section id="scraping-chocolate-product-data" class="slide level2">
+<h2>Scraping Chocolate Product Data</h2>
+<h3 id="step-1-web-scraping">Step 1: Web Scraping</h3>
+<div id="b9db72ac-0385-46bd-9d2e-423ca11c4acc" class="cell" data-execution_count="7">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup <span class="im">as</span> bs4</span>
+<span id="cb1-2"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href=""></a><span class="im">import</span> requests</span>
+<span id="cb1-4"><a href=""></a></span>
+<span id="cb1-5"><a href=""></a><span class="kw">def</span> scrape_all_products(pages<span class="op">=</span><span class="dv">3</span>):</span>
+<span id="cb1-6"><a href=""></a>    headers <span class="op">=</span> {</span>
+<span id="cb1-7"><a href=""></a>        <span class="st">'User-Agent'</span>: <span class="st">'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'</span>,</span>
+<span id="cb1-8"><a href=""></a>        <span class="st">'Accept-Language'</span>: <span class="st">'en-US,en;q=0.9'</span>,</span>
+<span id="cb1-9"><a href=""></a>    }</span>
+<span id="cb1-10"><a href=""></a></span>
+<span id="cb1-11"><a href=""></a>    all_products <span class="op">=</span> []</span>
+<span id="cb1-12"><a href=""></a></span>
+<span id="cb1-13"><a href=""></a>    <span class="cf">for</span> page <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, pages <span class="op">+</span> <span class="dv">1</span>):</span>
+<span id="cb1-14"><a href=""></a>        url <span class="op">=</span> <span class="ss">f"https://www.chocolate.co.uk/collections/all?page=</span><span class="sc">{</span>page<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb1-15"><a href=""></a></span>
+<span id="cb1-16"><a href=""></a>        <span class="cf">try</span>:</span>
+<span id="cb1-17"><a href=""></a>            send_request <span class="op">=</span> requests.get(url, headers<span class="op">=</span>headers)</span>
+<span id="cb1-18"><a href=""></a>            send_request.raise_for_status()</span>
+<span id="cb1-19"><a href=""></a>            soup <span class="op">=</span> bs4(send_request.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb1-20"><a href=""></a>        <span class="cf">except</span> requests.exceptions.RequestException <span class="im">as</span> e:</span>
+<span id="cb1-21"><a href=""></a>            <span class="bu">print</span>(<span class="ss">f"Failed to fetch page </span><span class="sc">{</span>page<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-22"><a href=""></a>            <span class="cf">continue</span></span>
+<span id="cb1-23"><a href=""></a></span>
+<span id="cb1-24"><a href=""></a>        chocolate_cards <span class="op">=</span> soup.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'product-item__info'</span>)</span>
+<span id="cb1-25"><a href=""></a>        <span class="bu">print</span>(<span class="ss">f"Found </span><span class="sc">{</span><span class="bu">len</span>(chocolate_cards)<span class="sc">}</span><span class="ss"> products on page </span><span class="sc">{</span>page<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb1-26"><a href=""></a></span>
+<span id="cb1-27"><a href=""></a>        <span class="cf">for</span> card <span class="kw">in</span> chocolate_cards:</span>
+<span id="cb1-28"><a href=""></a>            title_div <span class="op">=</span> card.find(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'product-item-meta'</span>)</span>
+<span id="cb1-29"><a href=""></a>            title_tag <span class="op">=</span> title_div.find(<span class="st">'a'</span>) <span class="cf">if</span> title_div <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb1-30"><a href=""></a>            Name <span class="op">=</span> title_tag.text.strip() <span class="cf">if</span> title_tag <span class="cf">else</span> <span class="st">"No Title"</span></span>
+<span id="cb1-31"><a href=""></a>            product_url <span class="op">=</span> title_tag[<span class="st">'href'</span>] <span class="cf">if</span> title_tag <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb1-32"><a href=""></a></span>
+<span id="cb1-33"><a href=""></a>            price_tag <span class="op">=</span> card.find(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'product-item-meta__price-list-container'</span>)</span>
+<span id="cb1-34"><a href=""></a>            price_span <span class="op">=</span> price_tag.find(<span class="st">'span'</span>, class_<span class="op">=</span><span class="st">'price'</span>) <span class="cf">if</span> price_tag <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb1-35"><a href=""></a>            price <span class="op">=</span> price_span.text.strip() <span class="cf">if</span> price_span <span class="cf">else</span> <span class="st">"No Price"</span></span>
+<span id="cb1-36"><a href=""></a></span>
+<span id="cb1-37"><a href=""></a>            <span class="cf">if</span> product_url:</span>
+<span id="cb1-38"><a href=""></a>                product_page <span class="op">=</span> requests.get(<span class="ss">f'https://www.chocolate.co.uk</span><span class="sc">{</span>product_url<span class="sc">}</span><span class="ss">'</span>, headers<span class="op">=</span>headers)</span>
+<span id="cb1-39"><a href=""></a>                product_soup <span class="op">=</span> bs4(product_page.text, <span class="st">'html.parser'</span>)</span>
+<span id="cb1-40"><a href=""></a>                ingredients <span class="op">=</span> <span class="st">"No Ingredients"</span></span>
+<span id="cb1-41"><a href=""></a>                ingredients_div <span class="op">=</span> product_soup.find(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">'metafield-rich_text_field'</span>)</span>
+<span id="cb1-42"><a href=""></a>                <span class="cf">if</span> ingredients_div:</span>
+<span id="cb1-43"><a href=""></a>                    <span class="cf">for</span> p <span class="kw">in</span> ingredients_div.find_all(<span class="st">'p'</span>):</span>
+<span id="cb1-44"><a href=""></a>                        <span class="cf">if</span> <span class="st">'Ingredients:'</span> <span class="kw">in</span> p.text:</span>
+<span id="cb1-45"><a href=""></a>                            ingredients <span class="op">=</span> p.text.replace(<span class="st">"Ingredients:"</span>, <span class="st">""</span>).strip()</span>
+<span id="cb1-46"><a href=""></a>                            <span class="cf">break</span></span>
+<span id="cb1-47"><a href=""></a>            <span class="cf">else</span>:</span>
+<span id="cb1-48"><a href=""></a>                ingredients <span class="op">=</span> <span class="st">"No URL"</span></span>
+<span id="cb1-49"><a href=""></a></span>
+<span id="cb1-50"><a href=""></a>            full_url <span class="op">=</span> <span class="ss">f'https://www.chocolate.co.uk</span><span class="sc">{</span>product_url<span class="sc">}</span><span class="ss">'</span></span>
+<span id="cb1-51"><a href=""></a></span>
+<span id="cb1-52"><a href=""></a>            product <span class="op">=</span> {</span>
+<span id="cb1-53"><a href=""></a>                <span class="st">"Name"</span>: Name,</span>
+<span id="cb1-54"><a href=""></a>                <span class="st">"Price"</span>: price,</span>
+<span id="cb1-55"><a href=""></a>                <span class="st">"Ingredients"</span>: ingredients,</span>
+<span id="cb1-56"><a href=""></a>                <span class="st">"URL"</span>: full_url</span>
+<span id="cb1-57"><a href=""></a>            }</span>
+<span id="cb1-58"><a href=""></a></span>
+<span id="cb1-59"><a href=""></a>            all_products.append(product)</span>
+<span id="cb1-60"><a href=""></a></span>
+<span id="cb1-61"><a href=""></a>    df <span class="op">=</span> pd.DataFrame(all_products)</span>
+<span id="cb1-62"><a href=""></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Scraped </span><span class="sc">{</span><span class="bu">len</span>(df)<span class="sc">}</span><span class="ss"> products in total.</span><span class="ch">\n</span><span class="ss">"</span>)</span>
+<span id="cb1-63"><a href=""></a>    <span class="bu">print</span>(df.head())</span>
+<span id="cb1-64"><a href=""></a>    <span class="cf">return</span> df</span>
+<span id="cb1-65"><a href=""></a></span>
+<span id="cb1-66"><a href=""></a>data <span class="op">=</span> scrape_all_products(<span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>Found 24 products on page 1
+Found 24 products on page 2
+Found 6 products on page 3
+
+Scraped 54 products in total.
+
+                                      Name                 Price  \
+0  2.5kg Bulk 41% Milk Hot Chocolate Drops      Sale price£50.00   
+1  2.5kg Bulk 61% Dark Hot Chocolate Drops      Sale price£50.00   
+2             41% Milk Hot Chocolate Drops       Sale price£8.75   
+3             61% Dark Hot Chocolate Drops       Sale price£8.75   
+4                           Almost Perfect  Sale priceFrom £1.00   
+
+                                         Ingredients  \
+0  Milk Chocolate (41% Cocoa Minimum, Pure Cocoa ...   
+1  Dark Chocolate (61% Cocoa Minimum, Pure Cocoa ...   
+2  Milk Chocolate (41% Cocoa Minimum, Pure Cocoa ...   
+3  Dark Chocolate (61% Cocoa Minimum, Pure Cocoa ...   
+4                                     No Ingredients   
+
+                                                 URL  
+0  https://www.chocolate.co.uk/products/2-5kg-bul...  
+1  https://www.chocolate.co.uk/products/2-5kg-of-...  
+2  https://www.chocolate.co.uk/products/41-colomb...  
+3  https://www.chocolate.co.uk/products/62-dark-h...  
+4  https://www.chocolate.co.uk/products/almost-pe...  </code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-and-formatting-the-data" class="slide level2">
+<h2>Cleaning and Formatting the Data</h2>
+<h3 id="step-2-data-cleaning">Step 2: Data Cleaning</h3>
+<div id="f8af49cf-2e08-428d-bc52-8088be36d4ea" class="cell" data-execution_count="21">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="co"># Check for missing values</span></span>
+<span id="cb3-2"><a href=""></a>data.isna().<span class="bu">sum</span>()</span>
+<span id="cb3-3"><a href=""></a><span class="co"># Check for duplicate values</span></span>
+<span id="cb3-4"><a href=""></a>data.duplicated()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<pre><code>Name           0
+Price          0
+Ingredients    0
+URL            0
+dtype: int64</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-block" class="slide level2">
+<h2>Cleaning block</h2>
+<div id="5c413980-29e3-4721-b306-9523917bea5a" class="cell" data-execution_count="9">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>df <span class="op">=</span> pd.read_csv(<span class="vs">r"C:</span><span class="er">\</span><span class="vs">Users</span><span class="er">\</span><span class="vs">user</span><span class="dv">\D</span><span class="vs">ownloads</span><span class="er">\</span><span class="vs">Chocolate_Products</span><span class="er">\</span><span class="vs">New_chocolate_product_dataset</span><span class="dv">.</span><span class="vs">csv"</span>)</span>
+<span id="cb5-2"><a href=""></a></span>
+<span id="cb5-3"><a href=""></a>df[<span class="st">'Price'</span>] <span class="op">=</span> df[<span class="st">'Price'</span>].<span class="bu">str</span>.replace(<span class="st">'Sale price'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-4"><a href=""></a>df[<span class="st">'Price'</span>] <span class="op">=</span> df[<span class="st">'Price'</span>].<span class="bu">str</span>.replace(<span class="st">'From'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-5"><a href=""></a>df[<span class="st">'Price'</span>] <span class="op">=</span> df[<span class="st">'Price'</span>].<span class="bu">str</span>.strip()</span>
+<span id="cb5-6"><a href=""></a>df[<span class="st">'Price (€)'</span>] <span class="op">=</span> df[<span class="st">'Price'</span>].<span class="bu">str</span>.replace(<span class="vs">r'</span><span class="pp">[^</span><span class="dv">\d</span><span class="pp">.]</span><span class="vs">'</span>, <span class="st">''</span>, regex<span class="op">=</span><span class="va">True</span>).astype(<span class="bu">float</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb5-7"><a href=""></a>df[<span class="st">'Name'</span>] <span class="op">=</span> df[<span class="st">'Name'</span>].<span class="bu">str</span>.title()</span>
+<span id="cb5-8"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="currency-conversion" class="slide level2">
+<h2>currency conversion</h2>
+<div id="6f600e2e-815f-4454-b114-dfab071b8cf5" class="cell" data-execution_count="10">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>exchange_rate <span class="op">=</span> <span class="fl">1.1424</span></span>
+<span id="cb6-2"><a href=""></a>df[<span class="st">'Price ($)'</span>] <span class="op">=</span> (df[<span class="st">'Price (€)'</span>] <span class="op">*</span> exchange_rate).<span class="bu">round</span>(<span class="dv">6</span>)</span>
+<span id="cb6-3"><a href=""></a>df[<span class="st">'Price ($)'</span>] <span class="op">=</span> df[<span class="st">'Price ($)'</span>].<span class="bu">map</span>(<span class="kw">lambda</span> x: (<span class="st">'</span><span class="sc">%.4f</span><span class="st">'</span> <span class="op">%</span> x).rstrip(<span class="st">'0'</span>).rstrip(<span class="st">'.'</span>))</span>
+<span id="cb6-4"><a href=""></a></span>
+<span id="cb6-5"><a href=""></a><span class="co"># Drop old column</span></span>
+<span id="cb6-6"><a href=""></a><span class="kw">del</span> df[<span class="st">'Price'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="column-reordering" class="slide level2">
+<h2>Column reordering</h2>
+<div id="739259a2-76b0-4331-a785-c37844e029d6" class="cell" data-execution_count="11">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>cols <span class="op">=</span> <span class="bu">list</span>(df.columns)</span>
+<span id="cb7-2"><a href=""></a>cols.remove(<span class="st">'Ingredients'</span>)</span>
+<span id="cb7-3"><a href=""></a>cols.append(<span class="st">'Ingredients'</span>)</span>
+<span id="cb7-4"><a href=""></a>cols.remove(<span class="st">'URL'</span>)</span>
+<span id="cb7-5"><a href=""></a>cols.append(<span class="st">'URL'</span>)</span>
+<span id="cb7-6"><a href=""></a>df <span class="op">=</span> df[cols]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section>
+<section id="final-cleaned-data" class="slide level2">
+<h2>Final Cleaned Data</h2>
+<div id="2944dd01-b703-46f8-9368-4886e5826396" class="cell" data-execution_count="12">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a>df1 <span class="op">=</span> df.style.set_table_styles([</span>
+<span id="cb8-2"><a href=""></a>    {<span class="st">'selector'</span>: <span class="st">'th'</span>, <span class="st">'props'</span>: [(<span class="st">'text-align'</span>, <span class="st">'center'</span>)]},  </span>
+<span id="cb8-3"><a href=""></a>    {<span class="st">'selector'</span>: <span class="st">'td'</span>, <span class="st">'props'</span>: [(<span class="st">'text-align'</span>, <span class="st">'center'</span>)]},</span>
+<span id="cb8-4"><a href=""></a>]).set_properties(</span>
+<span id="cb8-5"><a href=""></a>    subset<span class="op">=</span>[<span class="st">'Name'</span>],</span>
+<span id="cb8-6"><a href=""></a>    <span class="op">**</span>{<span class="st">'text-align'</span>: <span class="st">'right'</span>}</span>
+<span id="cb8-7"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<style type="text/css">
+#T_8c7cb th {
+  text-align: center;
+}
+#T_8c7cb td {
+  text-align: center;
+}
+#T_8c7cb_row0_col0, #T_8c7cb_row1_col0, #T_8c7cb_row2_col0, #T_8c7cb_row3_col0, #T_8c7cb_row4_col0, #T_8c7cb_row5_col0, #T_8c7cb_row6_col0, #T_8c7cb_row7_col0, #T_8c7cb_row8_col0, #T_8c7cb_row9_col0, #T_8c7cb_row10_col0, #T_8c7cb_row11_col0, #T_8c7cb_row12_col0, #T_8c7cb_row13_col0, #T_8c7cb_row14_col0, #T_8c7cb_row15_col0, #T_8c7cb_row16_col0, #T_8c7cb_row17_col0, #T_8c7cb_row18_col0, #T_8c7cb_row19_col0, #T_8c7cb_row20_col0, #T_8c7cb_row21_col0, #T_8c7cb_row22_col0, #T_8c7cb_row23_col0, #T_8c7cb_row24_col0, #T_8c7cb_row25_col0, #T_8c7cb_row26_col0, #T_8c7cb_row27_col0, #T_8c7cb_row28_col0, #T_8c7cb_row29_col0, #T_8c7cb_row30_col0, #T_8c7cb_row31_col0, #T_8c7cb_row32_col0, #T_8c7cb_row33_col0, #T_8c7cb_row34_col0, #T_8c7cb_row35_col0, #T_8c7cb_row36_col0, #T_8c7cb_row37_col0, #T_8c7cb_row38_col0, #T_8c7cb_row39_col0, #T_8c7cb_row40_col0, #T_8c7cb_row41_col0, #T_8c7cb_row42_col0, #T_8c7cb_row43_col0, #T_8c7cb_row44_col0, #T_8c7cb_row45_col0, #T_8c7cb_row46_col0, #T_8c7cb_row47_col0, #T_8c7cb_row48_col0, #T_8c7cb_row49_col0, #T_8c7cb_row50_col0, #T_8c7cb_row51_col0, #T_8c7cb_row52_col0, #T_8c7cb_row53_col0 {
+  text-align: right;
+}
+</style>
+
+<table id="T_8c7cb" class="caption-top" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
+<th id="T_8c7cb_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Name</th>
+<th id="T_8c7cb_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Price (€)</th>
+<th id="T_8c7cb_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Price ($)</th>
+<th id="T_8c7cb_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Ingredients</th>
+<th id="T_8c7cb_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td id="T_8c7cb_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">0</td>
+<td id="T_8c7cb_row0_col0" class="data row0 col0">2.5Kg Bulk 41% Milk Hot Chocolate Drops</td>
+<td id="T_8c7cb_row0_col1" class="data row0 col1">50</td>
+<td id="T_8c7cb_row0_col2" class="data row0 col2">57.12</td>
+<td id="T_8c7cb_row0_col3" class="data row0 col3">Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids) (100%): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Beans, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row0_col4" class="data row0 col4">https://www.chocolate.co.uk/products/2-5kg-bulk-of-our-41-milk-hot-chocolate-drops</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">1</td>
+<td id="T_8c7cb_row1_col0" class="data row1 col0">2.5Kg Bulk 61% Dark Hot Chocolate Drops</td>
+<td id="T_8c7cb_row1_col1" class="data row1 col1">50</td>
+<td id="T_8c7cb_row1_col2" class="data row1 col2">57.12</td>
+<td id="T_8c7cb_row1_col3" class="data row1 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (100%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row1_col4" class="data row1 col4">https://www.chocolate.co.uk/products/2-5kg-of-our-best-selling-61-dark-hot-chocolate-drops</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">2</td>
+<td id="T_8c7cb_row2_col0" class="data row2 col0">41% Milk Hot Chocolate Drops</td>
+<td id="T_8c7cb_row2_col1" class="data row2 col1">8</td>
+<td id="T_8c7cb_row2_col2" class="data row2 col2">9.1392</td>
+<td id="T_8c7cb_row2_col3" class="data row2 col3">Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids) (100%): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Beans, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row2_col4" class="data row2 col4">https://www.chocolate.co.uk/products/41-colombian-milk-hot-chocolate-drops</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row3" class="row_heading level0 row3" data-quarto-table-cell-role="th">3</td>
+<td id="T_8c7cb_row3_col0" class="data row3 col0">61% Dark Hot Chocolate Drops</td>
+<td id="T_8c7cb_row3_col1" class="data row3 col1">8</td>
+<td id="T_8c7cb_row3_col2" class="data row3 col2">9.1392</td>
+<td id="T_8c7cb_row3_col3" class="data row3 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (100%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row3_col4" class="data row3 col4">https://www.chocolate.co.uk/products/62-dark-hot-chocolate</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row4" class="row_heading level0 row4" data-quarto-table-cell-role="th">4</td>
+<td id="T_8c7cb_row4_col0" class="data row4 col0">Almost Perfect</td>
+<td id="T_8c7cb_row4_col1" class="data row4 col1">1</td>
+<td id="T_8c7cb_row4_col2" class="data row4 col2">1.1424</td>
+<td id="T_8c7cb_row4_col3" class="data row4 col3">No Ingredients</td>
+<td id="T_8c7cb_row4_col4" class="data row4 col4">https://www.chocolate.co.uk/products/almost-perfect</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row5" class="row_heading level0 row5" data-quarto-table-cell-role="th">5</td>
+<td id="T_8c7cb_row5_col0" class="data row5 col0">Assorted Chocolate Malt Balls</td>
+<td id="T_8c7cb_row5_col1" class="data row5 col1">9</td>
+<td id="T_8c7cb_row5_col2" class="data row5 col2">10.2816</td>
+<td id="T_8c7cb_row5_col3" class="data row5 col3">White Chocolate (25%)&nbsp;(32% Cocoa Minimum, Pure Cocoa Butter) (65%): Cocoa Butter, Sugar,&nbsp;Whole Milk Powder,&nbsp;Skimmed&nbsp;Milk Powder,&nbsp;Whey&nbsp;Powder, Caramelised Sugar,&nbsp;Emulsifier:&nbsp;(Soya Lecithin), Natural Vanilla Flavouring, Salt. Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids): Sugar, Cocoa Butter,&nbsp;Milk Powder, Cocoa Beans,&nbsp;Emulsifier: Sunflower Lecithin, Natural Vanilla Extract. Dark Chocolate (25%) (61% Cocoa Minimum, Pure Cocoa Butter): Cocoa Beans, Sugar, Cocoa Butter,&nbsp;Emulsifier: Sunflower&nbsp;Lecithin, Natural Vanilla Extract. Malt Ball Centres (25%): Corn Syrup, Sugar,&nbsp;Dairy Blend&nbsp;(Whey,&nbsp;Whey Protein Concentrate), Malt Powder (Malted Barley,&nbsp;Wheat,&nbsp;Milk,&nbsp;Hydrolyzed Wheat Gluten, Sodium Bicarbonate, Salt),&nbsp;Malted Barley,&nbsp;Soya Lecithin, Salt. Gum Arabic.</td>
+<td id="T_8c7cb_row5_col4" class="data row5 col4">https://www.chocolate.co.uk/products/assorted-chocolate-malt-balls</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row6" class="row_heading level0 row6" data-quarto-table-cell-role="th">6</td>
+<td id="T_8c7cb_row6_col0" class="data row6 col0">Blonde Caramel</td>
+<td id="T_8c7cb_row6_col1" class="data row6 col1">5</td>
+<td id="T_8c7cb_row6_col2" class="data row6 col2">5.712</td>
+<td id="T_8c7cb_row6_col3" class="data row6 col3">White Chocolate (35% Cocoa Minimum, Pure Cocoa Butter): Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring.</td>
+<td id="T_8c7cb_row6_col4" class="data row6 col4">https://www.chocolate.co.uk/products/blonde-caramel-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row7" class="row_heading level0 row7" data-quarto-table-cell-role="th">7</td>
+<td id="T_8c7cb_row7_col0" class="data row7 col0">Blonde Chocolate Honeycomb - Bag</td>
+<td id="T_8c7cb_row7_col1" class="data row7 col1">8</td>
+<td id="T_8c7cb_row7_col2" class="data row7 col2">9.1392</td>
+<td id="T_8c7cb_row7_col3" class="data row7 col3">White Chocolate (Min 35% Cocoa Min, Pure Cocoa Butter, 24.7% Milk Solids): Cocoa Butter, Sugar, Whole Milk Powder, Dried Skimmed Milk, Whey, Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Extract, Honeycomb (Sugar, Glucose Syrup, Bicarbonate of Soda, Honey).</td>
+<td id="T_8c7cb_row7_col4" class="data row7 col4">https://www.chocolate.co.uk/products/blonde-chocolate-sea-salt-honeycomb</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row8" class="row_heading level0 row8" data-quarto-table-cell-role="th">8</td>
+<td id="T_8c7cb_row8_col0" class="data row8 col0">Blonde Chocolate Malt Balls</td>
+<td id="T_8c7cb_row8_col1" class="data row8 col1">9</td>
+<td id="T_8c7cb_row8_col2" class="data row8 col2">10.2816</td>
+<td id="T_8c7cb_row8_col3" class="data row8 col3">White Chocolate (32% Cocoa Minimum, Pure Cocoa Butter) (65%): Cocoa Butter, Sugar,&nbsp;Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Caramelised Sugar, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring, Salt. Malt Ball Centres (35%): Corn Syrup, Sugar, Dairy Blend (Whey, Whey Protein Concentrate), Malt Powder (Malted Barley, Wheat, Milk, Hydrolyzed Wheat Gluten, Sodium Bicarbonate, Salt), Malted Barley, Soya Lecithin, Salt.</td>
+<td id="T_8c7cb_row8_col4" class="data row8 col4">https://www.chocolate.co.uk/products/blonde-chocolate-malt-balls</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row9" class="row_heading level0 row9" data-quarto-table-cell-role="th">9</td>
+<td id="T_8c7cb_row9_col0" class="data row9 col0">Blonde Chocolate Truffles</td>
+<td id="T_8c7cb_row9_col1" class="data row9 col1">19</td>
+<td id="T_8c7cb_row9_col2" class="data row9 col2">21.7056</td>
+<td id="T_8c7cb_row9_col3" class="data row9 col3">White Chocolate (32% Cocoa Minimum, Pure Cocoa Butter, 24.7% Milk Solid) Sugar, Cocoa Butter, Whole Milk Powder, Dried Skimmed Milk, Whey, Butter, Emulsifier (Soya Lecithin), Natural Vanilla Extract, Cream, Glucose, Sorbitol, Sunflower Lecithin.</td>
+<td id="T_8c7cb_row9_col4" class="data row9 col4">https://www.chocolate.co.uk/products/blonde-chocolate-truffles</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row10" class="row_heading level0 row10" data-quarto-table-cell-role="th">10</td>
+<td id="T_8c7cb_row10_col0" class="data row10 col0">Bulk 41% Milk Hot Chocolate Drops 750 Grams</td>
+<td id="T_8c7cb_row10_col1" class="data row10 col1">17</td>
+<td id="T_8c7cb_row10_col2" class="data row10 col2">19.4208</td>
+<td id="T_8c7cb_row10_col3" class="data row10 col3">Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids) (100%): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Beans, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row10_col4" class="data row10 col4">https://www.chocolate.co.uk/products/bulk-41-milk-hot-chocolate-drops-750-grams</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row11" class="row_heading level0 row11" data-quarto-table-cell-role="th">11</td>
+<td id="T_8c7cb_row11_col0" class="data row11 col0">Bulk 61% Dark Hot Chocolate Drops 750 Grams</td>
+<td id="T_8c7cb_row11_col1" class="data row11 col1">17</td>
+<td id="T_8c7cb_row11_col2" class="data row11 col2">19.4208</td>
+<td id="T_8c7cb_row11_col3" class="data row11 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (100%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row11_col4" class="data row11 col4">https://www.chocolate.co.uk/products/750-gram-bulk-61-dark-hot-chocolate-drops</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row12" class="row_heading level0 row12" data-quarto-table-cell-role="th">12</td>
+<td id="T_8c7cb_row12_col0" class="data row12 col0">Caramelised Milk</td>
+<td id="T_8c7cb_row12_col1" class="data row12 col1">5</td>
+<td id="T_8c7cb_row12_col2" class="data row12 col2">5.712</td>
+<td id="T_8c7cb_row12_col3" class="data row12 col3">Milk Chocolate (39% Cocoa Solids, Pure Cocoa Butter): Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Solids, Skimmed Milk, Whey (milk), Butter (milk), Emulsifier : Soya Lecithin, Flavourings.</td>
+<td id="T_8c7cb_row12_col4" class="data row12 col4">https://www.chocolate.co.uk/products/caramelised-milk-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row13" class="row_heading level0 row13" data-quarto-table-cell-role="th">13</td>
+<td id="T_8c7cb_row13_col0" class="data row13 col0">Chai Caramel Latte</td>
+<td id="T_8c7cb_row13_col1" class="data row13 col1">5</td>
+<td id="T_8c7cb_row13_col2" class="data row13 col2">5.712</td>
+<td id="T_8c7cb_row13_col3" class="data row13 col3">Milk Chocolate (35%) (Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Beans, Emulsifier: (Soya Lecithin, Sunflower Lecithin), Natural Vanilla Extract, Blonde Chocolate (65%) (Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Butter (Milk), Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring), Star Anise Oil, Ginger Oil, Cinnamon OIl, Clove Oil.</td>
+<td id="T_8c7cb_row13_col4" class="data row13 col4">https://www.chocolate.co.uk/products/chai-caramel-latte</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row14" class="row_heading level0 row14" data-quarto-table-cell-role="th">14</td>
+<td id="T_8c7cb_row14_col0" class="data row14 col0">Chocolate Caramelised Pecan Nuts</td>
+<td id="T_8c7cb_row14_col1" class="data row14 col1">8</td>
+<td id="T_8c7cb_row14_col2" class="data row14 col2">9.1392</td>
+<td id="T_8c7cb_row14_col3" class="data row14 col3">Caramelised Pecans (60%):&nbsp;Pecan Nut, Sugar. Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids) (40%): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Mass, Emulsifier:&nbsp;Soya&nbsp;Lecithin, Vanilla Extract.</td>
+<td id="T_8c7cb_row14_col4" class="data row14 col4">https://www.chocolate.co.uk/products/chocolate-caramelised-pecan-nuts</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row15" class="row_heading level0 row15" data-quarto-table-cell-role="th">15</td>
+<td id="T_8c7cb_row15_col0" class="data row15 col0">Chocolate Celebration Hamper</td>
+<td id="T_8c7cb_row15_col1" class="data row15 col1">55</td>
+<td id="T_8c7cb_row15_col2" class="data row15 col2">62.832</td>
+<td id="T_8c7cb_row15_col3" class="data row15 col3">No Ingredients</td>
+<td id="T_8c7cb_row15_col4" class="data row15 col4">https://www.chocolate.co.uk/products/celebration-hamper</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row16" class="row_heading level0 row16" data-quarto-table-cell-role="th">16</td>
+<td id="T_8c7cb_row16_col0" class="data row16 col0">Christmas Cracker</td>
+<td id="T_8c7cb_row16_col1" class="data row16 col1">5</td>
+<td id="T_8c7cb_row16_col2" class="data row16 col2">5.712</td>
+<td id="T_8c7cb_row16_col3" class="data row16 col3">Milk Chocolate (43% Cocoa Min, Pure Cocoa Butter, 19% Milk Solids) (93%): Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Beans, Emulsifier: (Soya Lecithin), Natural Vanilla Extract. Biscuit Pearls (3.5%): Dark Chocolate Coating (55% Cocoa Min, Pure Cocoa Butter), Sugar, Cocoa Bean, Cocoa Butter, Biscuit Cereal (Wheat Flour, Sugar, Wheat Malt, Wheat Starch, Raising Agent: E500ii, Salt, Cocoa Butter, Natural Flavouring), Whole Milk Powder, Emulsifier: (Sunflower Lecithin), Natural Vanilla Extract. Popping Candy (3.5%): Sugar, Cocoa Butter, Lactose, Milk Powder, Cocoa Paste, Glucose Syrup, Butter, Emulsifier: Soya Lecithin, Vanilla, Propellent Gas: Carbon Dioxide, E290.</td>
+<td id="T_8c7cb_row16_col4" class="data row16 col4">https://www.chocolate.co.uk/products/christmas-cracker-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row17" class="row_heading level0 row17" data-quarto-table-cell-role="th">17</td>
+<td id="T_8c7cb_row17_col0" class="data row17 col0">Cinnamon Toast</td>
+<td id="T_8c7cb_row17_col1" class="data row17 col1">5</td>
+<td id="T_8c7cb_row17_col2" class="data row17 col2">5.712</td>
+<td id="T_8c7cb_row17_col3" class="data row17 col3">White Chocolate (35% Cocoa Minimum, Pure Cocoa Butter) (95.47%): Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring. Sourdough Cracker (4.5%): Milk, Rye Flour, Wheat Flour (Wheat Flour, Calcium, Iron, Thiamin, Niacin), Sourdough 12% (Rye Flour, Water), Wholemeal Wheat Flour, Honey, Salt. Organic Cinnamon Essential Oil (0.03%).</td>
+<td id="T_8c7cb_row17_col4" class="data row17 col4">https://www.chocolate.co.uk/products/cinnamon-toast-chocolate-bar</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row18" class="row_heading level0 row18" data-quarto-table-cell-role="th">18</td>
+<td id="T_8c7cb_row18_col0" class="data row18 col0">Collection Of 4 Of Our Best Selling Chocolate Malt Balls</td>
+<td id="T_8c7cb_row18_col1" class="data row18 col1">30</td>
+<td id="T_8c7cb_row18_col2" class="data row18 col2">34.272</td>
+<td id="T_8c7cb_row18_col3" class="data row18 col3">Milk Chocolate (75%) (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Beans, Emulsifier: Sunflower Lecithin, Natural Vanilla Extract. Malt Ball Centres (25%): Corn Syrup, Sugar, Dairy Blend (Whey, Whey&nbsp;Protein Concentrate), Malt Powder (Malted&nbsp;Barley,&nbsp;Wheat,&nbsp;Milk, Hydrolysed&nbsp;Wheat&nbsp;Gluten, Sodium Bicarbonate, Salt), Malted&nbsp;Barley,&nbsp;Emulsifier:&nbsp;Soya&nbsp;Lecithin. Organic Sweet Orange Essential Oil, Gum Arabic.</td>
+<td id="T_8c7cb_row18_col4" class="data row18 col4">https://www.chocolate.co.uk/products/collection-of-our-best-selling-chocolate-malt-balls</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row19" class="row_heading level0 row19" data-quarto-table-cell-role="th">19</td>
+<td id="T_8c7cb_row19_col0" class="data row19 col0">Colombia 61%</td>
+<td id="T_8c7cb_row19_col1" class="data row19 col1">5</td>
+<td id="T_8c7cb_row19_col2" class="data row19 col2">5.712</td>
+<td id="T_8c7cb_row19_col3" class="data row19 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (100%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: (Soya Lecithin), Vanilla Extract.</td>
+<td id="T_8c7cb_row19_col4" class="data row19 col4">https://www.chocolate.co.uk/products/colombian-dark-chocolate-bar</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row20" class="row_heading level0 row20" data-quarto-table-cell-role="th">20</td>
+<td id="T_8c7cb_row20_col0" class="data row20 col0">Crunchy Biscuit</td>
+<td id="T_8c7cb_row20_col1" class="data row20 col1">5</td>
+<td id="T_8c7cb_row20_col2" class="data row20 col2">5.712</td>
+<td id="T_8c7cb_row20_col3" class="data row20 col3">Caramelised White Chocolate (35% Cocoa Minimum, Pure Cocoa Butter) (96%): Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring. Biscuit Pearls (4%): Dark Chocolate Coating (55% Cocoa Min, Pure Cocoa Butter), Sugar, Cocoa Bean, Cocoa Butter, Biscuit Cereal (Wheat Flour, Sugar, Wheat Malt, Wheat Starch, Raising Agent: E500ii, Salt, Cocoa Butter, Natural Flavouring), Whole Milk Powder, Emulisifer: (Sunflower Lecithin), Natural Vanilla Extract.</td>
+<td id="T_8c7cb_row20_col4" class="data row20 col4">https://www.chocolate.co.uk/products/crunchy-biscuit-blonde-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row21" class="row_heading level0 row21" data-quarto-table-cell-role="th">21</td>
+<td id="T_8c7cb_row21_col0" class="data row21 col0">Dark Chocolate Ginger</td>
+<td id="T_8c7cb_row21_col1" class="data row21 col1">8</td>
+<td id="T_8c7cb_row21_col2" class="data row21 col2">9.1392</td>
+<td id="T_8c7cb_row21_col3" class="data row21 col3">Ginger (55%): Ginger, Sugar,&nbsp;Wheat&nbsp;Glucose Syrup,&nbsp;Wheat&nbsp;Dextrose. Dark Chocolate (61% Cocoa minimum, Pure Cocoa Butter) (45%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: (Soya&nbsp;lecithin), Vanilla Extract.</td>
+<td id="T_8c7cb_row21_col4" class="data row21 col4">https://www.chocolate.co.uk/products/dark-chocolate-ginger</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row22" class="row_heading level0 row22" data-quarto-table-cell-role="th">22</td>
+<td id="T_8c7cb_row22_col0" class="data row22 col0">Dark Chocolate Honeycomb - Bag</td>
+<td id="T_8c7cb_row22_col1" class="data row22 col1">8</td>
+<td id="T_8c7cb_row22_col2" class="data row22 col2">9.1392</td>
+<td id="T_8c7cb_row22_col3" class="data row22 col3">Dark Chocolate (61% Cocoa Min, Pure Cocoa Butter) Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Extract, Honeycomb (Sugar, Glucose Syrup, Bicarbonate of Soda, Honey).</td>
+<td id="T_8c7cb_row22_col4" class="data row22 col4">https://www.chocolate.co.uk/products/dark-chocolate-honeycomb</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row23" class="row_heading level0 row23" data-quarto-table-cell-role="th">23</td>
+<td id="T_8c7cb_row23_col0" class="data row23 col0">Dark Chocolate Malt Balls</td>
+<td id="T_8c7cb_row23_col1" class="data row23 col1">9</td>
+<td id="T_8c7cb_row23_col2" class="data row23 col2">10.2816</td>
+<td id="T_8c7cb_row23_col3" class="data row23 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: Soya Lecithin, Natural Vanilla Extract. Malt Ball Centres (35%): Corn Syrup, Sugar, Dairy Blend (Whey, Whey Protein Concentrate), Malt Powder (Malted Barley, Wheat, Milk, Hydrolyzed Wheat Gluten, Sodium Bicarbonate, Salt), Malted Barley, Soya Lecithin, Salt.</td>
+<td id="T_8c7cb_row23_col4" class="data row23 col4">https://www.chocolate.co.uk/products/dark-chocolate-malt-balls</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row24" class="row_heading level0 row24" data-quarto-table-cell-role="th">24</td>
+<td id="T_8c7cb_row24_col0" class="data row24 col0">Dark Chocolate Orange Peel</td>
+<td id="T_8c7cb_row24_col1" class="data row24 col1">10</td>
+<td id="T_8c7cb_row24_col2" class="data row24 col2">11.424</td>
+<td id="T_8c7cb_row24_col3" class="data row24 col3">Candied Orange Peel (55%): Orange Peel, Sugar,&nbsp;Wheat&nbsp;Glucose Syrup,&nbsp;Wheat&nbsp;Dextrose. Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (45%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: (Soya&nbsp;lecithin), Vanilla Extract.</td>
+<td id="T_8c7cb_row24_col4" class="data row24 col4">https://www.chocolate.co.uk/products/dark-chocolate-orange-peel</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row25" class="row_heading level0 row25" data-quarto-table-cell-role="th">25</td>
+<td id="T_8c7cb_row25_col0" class="data row25 col0">Dark Chocolate Truffles</td>
+<td id="T_8c7cb_row25_col1" class="data row25 col1">19</td>
+<td id="T_8c7cb_row25_col2" class="data row25 col2">21.7056</td>
+<td id="T_8c7cb_row25_col3" class="data row25 col3">Dark Chocolate (55% Cocoa Minimum, Pure Cocoa Butter), Sugar, Cocoa Beans, Emulsifier (Soya Lecithin), Natural Vanilla Extract. Glucose, Cream, Sorbitol, Butter, UHT Whole Milk, Dextrose, Sunflower Lecithin.</td>
+<td id="T_8c7cb_row25_col4" class="data row25 col4">https://www.chocolate.co.uk/products/dark-chocolate-truffles</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row26" class="row_heading level0 row26" data-quarto-table-cell-role="th">26</td>
+<td id="T_8c7cb_row26_col0" class="data row26 col0">Ecudorian 41%</td>
+<td id="T_8c7cb_row26_col1" class="data row26 col1">5</td>
+<td id="T_8c7cb_row26_col2" class="data row26 col2">5.712</td>
+<td id="T_8c7cb_row26_col3" class="data row26 col3">Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids) (100%): Sugar, Cocoa Butter, Milk Powder, Cocoa Beans, Emulsifier: (Soya Lecithin) Vanilla Extract.</td>
+<td id="T_8c7cb_row26_col4" class="data row26 col4">https://www.chocolate.co.uk/products/ecuadorian-41-milk-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row27" class="row_heading level0 row27" data-quarto-table-cell-role="th">27</td>
+<td id="T_8c7cb_row27_col0" class="data row27 col0">Flat White Coffee</td>
+<td id="T_8c7cb_row27_col1" class="data row27 col1">5</td>
+<td id="T_8c7cb_row27_col2" class="data row27 col2">5.712</td>
+<td id="T_8c7cb_row27_col3" class="data row27 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (100%), White Chocolate (36% Cocoa Minimum, Pure Cocoa Butter): Cocoa Beans, Sugar, Cocoa Butter, Whole&nbsp;Milk&nbsp;Powder, Skimmed&nbsp;Milk&nbsp;Powder, Emulsifier: (Soya&nbsp;Lecithin), Vanilla Extract, Coffee.</td>
+<td id="T_8c7cb_row27_col4" class="data row27 col4">https://www.chocolate.co.uk/products/flat-white-coffee</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row28" class="row_heading level0 row28" data-quarto-table-cell-role="th">28</td>
+<td id="T_8c7cb_row28_col0" class="data row28 col0">Gift Voucher</td>
+<td id="T_8c7cb_row28_col1" class="data row28 col1">10</td>
+<td id="T_8c7cb_row28_col2" class="data row28 col2">11.424</td>
+<td id="T_8c7cb_row28_col3" class="data row28 col3">No Ingredients</td>
+<td id="T_8c7cb_row28_col4" class="data row28 col4">https://www.chocolate.co.uk/products/gift-voucher</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row29" class="row_heading level0 row29" data-quarto-table-cell-role="th">29</td>
+<td id="T_8c7cb_row29_col0" class="data row29 col0">Ginger Biscuit</td>
+<td id="T_8c7cb_row29_col1" class="data row29 col1">5</td>
+<td id="T_8c7cb_row29_col2" class="data row29 col2">5.712</td>
+<td id="T_8c7cb_row29_col3" class="data row29 col3">White Chocolate (35% Cocoa Minimum, Pure Cocoa Butter) (96.33%): Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring. Biscuit Pearls (3.6%): Dark Chocolate Coating (55% Cocoa Min, Pure Cocoa Butter), Sugar, Cocoa Bean, Cocoa Butter, Biscuit Cereal (Wheat Flour, Sugar, Wheat Malt, Wheat Starch, Raising Agent: E500ii, Salt, Cocoa Butter, Natural Flavouring), Whole Milk Powder, Emulsifier: (Sunflower Lecithin), Natural Vanilla Extract. Organic Ginger Essential Oil (0.06%). Organic Cinnamon Essential Oil (0.01%).</td>
+<td id="T_8c7cb_row29_col4" class="data row29 col4">https://www.chocolate.co.uk/products/ginger-biscuit-chocolate-bar</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row30" class="row_heading level0 row30" data-quarto-table-cell-role="th">30</td>
+<td id="T_8c7cb_row30_col0" class="data row30 col0">Honeycomb Crunch</td>
+<td id="T_8c7cb_row30_col1" class="data row30 col1">5</td>
+<td id="T_8c7cb_row30_col2" class="data row30 col2">5.712</td>
+<td id="T_8c7cb_row30_col3" class="data row30 col3">Milk Chocolate (41% Cocoa Min, Pure Cocoa Butter) Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Beans, Emulsifier: (Soya Lecithin), Natural Vanilla Extract. Honeycomb (3%) (Sugar, Glucose Syrup, Bicarbonate of Soda, Honey).</td>
+<td id="T_8c7cb_row30_col4" class="data row30 col4">https://www.chocolate.co.uk/products/honeycomb-crunch</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row31" class="row_heading level0 row31" data-quarto-table-cell-role="th">31</td>
+<td id="T_8c7cb_row31_col0" class="data row31 col0">Hot Chocolate Shaker</td>
+<td id="T_8c7cb_row31_col1" class="data row31 col1">25</td>
+<td id="T_8c7cb_row31_col2" class="data row31 col2">28.56</td>
+<td id="T_8c7cb_row31_col3" class="data row31 col3">No Ingredients</td>
+<td id="T_8c7cb_row31_col4" class="data row31 col4">https://www.chocolate.co.uk/products/hot-chocolate-shaker-new</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row32" class="row_heading level0 row32" data-quarto-table-cell-role="th">32</td>
+<td id="T_8c7cb_row32_col0" class="data row32 col0">Luxury Hot Chocolate Hamper</td>
+<td id="T_8c7cb_row32_col1" class="data row32 col1">55</td>
+<td id="T_8c7cb_row32_col2" class="data row32 col2">62.832</td>
+<td id="T_8c7cb_row32_col3" class="data row32 col3">No Ingredients</td>
+<td id="T_8c7cb_row32_col4" class="data row32 col4">https://www.chocolate.co.uk/products/luxury-hot-chocolate-hamper</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row33" class="row_heading level0 row33" data-quarto-table-cell-role="th">33</td>
+<td id="T_8c7cb_row33_col0" class="data row33 col0">Marc De Champagne Truffles</td>
+<td id="T_8c7cb_row33_col1" class="data row33 col1">19</td>
+<td id="T_8c7cb_row33_col2" class="data row33 col2">21.7056</td>
+<td id="T_8c7cb_row33_col3" class="data row33 col3">Milk Chocolate (40% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids): Sugar, Cocoa Butter, Milk Powder, Cocoa Beans, Emulsifier: Soya Lecithin, Natural Vanilla Extract, Sorbitol, Glucose Syrup, Anhydrous Butter (Milk), Icing Sugar, Skimmed Milk, Marc De Champagne, Glycerin, Sunflower Lecithin.</td>
+<td id="T_8c7cb_row33_col4" class="data row33 col4">https://www.chocolate.co.uk/products/marc-de-champagne-truffles</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row34" class="row_heading level0 row34" data-quarto-table-cell-role="th">34</td>
+<td id="T_8c7cb_row34_col0" class="data row34 col0">Marmalade</td>
+<td id="T_8c7cb_row34_col1" class="data row34 col1">5</td>
+<td id="T_8c7cb_row34_col2" class="data row34 col2">5.712</td>
+<td id="T_8c7cb_row34_col3" class="data row34 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (99.8%): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: Soya Lecithin, Vanilla Extract. Organic Bitter Orange Essential Oil (0.2%).</td>
+<td id="T_8c7cb_row34_col4" class="data row34 col4">https://www.chocolate.co.uk/products/marmalade-orange-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row35" class="row_heading level0 row35" data-quarto-table-cell-role="th">35</td>
+<td id="T_8c7cb_row35_col0" class="data row35 col0">Milk Chocolate Honeycomb - Bag</td>
+<td id="T_8c7cb_row35_col1" class="data row35 col1">8</td>
+<td id="T_8c7cb_row35_col2" class="data row35 col2">9.1392</td>
+<td id="T_8c7cb_row35_col3" class="data row35 col3">Milk Chocolate (41% Cocoa Min, Pure Cocoa Butter) Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Beans, Emulsifier: (Soya Lecithin), Natural Vanilla Extract. Honeycomb (Sugar, Glucose Syrup, Bicarbonate of Soda, Honey).</td>
+<td id="T_8c7cb_row35_col4" class="data row35 col4">https://www.chocolate.co.uk/products/milk-chocolate-honeycomb</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row36" class="row_heading level0 row36" data-quarto-table-cell-role="th">36</td>
+<td id="T_8c7cb_row36_col0" class="data row36 col0">Milk Chocolate Malt Balls</td>
+<td id="T_8c7cb_row36_col1" class="data row36 col1">9</td>
+<td id="T_8c7cb_row36_col2" class="data row36 col2">10.2816</td>
+<td id="T_8c7cb_row36_col3" class="data row36 col3">Milk Chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids): Sugar, Cocoa Butter, Milk Powder, Cocoa Beans, Emulsifier: Soya Lecithin, Natural Vanilla Extract. Malt Ball Centres (35%): Corn Syrup, Sugar, Dairy Blend (Whey, Whey Protein Concentrate), Malt Powder (Malted Barley, Wheat, Milk, Hydrolyzed Wheat Gluten, Sodium Bicarbonate, Salt), Malted Barley, Soya Lecithin, Salt.</td>
+<td id="T_8c7cb_row36_col4" class="data row36 col4">https://www.chocolate.co.uk/products/milk-chocolate-malt-balls</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row37" class="row_heading level0 row37" data-quarto-table-cell-role="th">37</td>
+<td id="T_8c7cb_row37_col0" class="data row37 col0">Milk Chocolate Truffles</td>
+<td id="T_8c7cb_row37_col1" class="data row37 col1">19</td>
+<td id="T_8c7cb_row37_col2" class="data row37 col2">21.7056</td>
+<td id="T_8c7cb_row37_col3" class="data row37 col3">Milk Chocolate (37% Cocoa Minimum, Pure Cocoa Butter, 21% Milk Solids) Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Beans, Emulsifier (Soya Lecithin) Natural Vanilla Extract. Cream, Sorbitol, Glucose, Butter, Sunflower Lecithin.</td>
+<td id="T_8c7cb_row37_col4" class="data row37 col4">https://www.chocolate.co.uk/products/milk-chocolate-truffles</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row38" class="row_heading level0 row38" data-quarto-table-cell-role="th">38</td>
+<td id="T_8c7cb_row38_col0" class="data row38 col0">Orange Malt Balls</td>
+<td id="T_8c7cb_row38_col1" class="data row38 col1">8</td>
+<td id="T_8c7cb_row38_col2" class="data row38 col2">9.1392</td>
+<td id="T_8c7cb_row38_col3" class="data row38 col3">Milk Chocolate (75%) (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Beans, Emulsifier: Sunflower Lecithin, Natural Vanilla Extract. Malt Ball Centres (25%): Corn Syrup, Sugar, Dairy Blend (Whey, Whey&nbsp;Protein Concentrate), Malt Powder (Malted&nbsp;Barley,&nbsp;Wheat,&nbsp;Milk, Hydrolysed&nbsp;Wheat&nbsp;Gluten, Sodium Bicarbonate, Salt), Malted&nbsp;Barley,&nbsp;Emulsifier:&nbsp;Soya&nbsp;Lecithin. Organic Sweet Orange Essential Oil, Gum Arabic.</td>
+<td id="T_8c7cb_row38_col4" class="data row38 col4">https://www.chocolate.co.uk/products/orange-malt-balls</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row39" class="row_heading level0 row39" data-quarto-table-cell-role="th">39</td>
+<td id="T_8c7cb_row39_col0" class="data row39 col0">Peppermint Malt Balls</td>
+<td id="T_8c7cb_row39_col1" class="data row39 col1">8</td>
+<td id="T_8c7cb_row39_col2" class="data row39 col2">9.1392</td>
+<td id="T_8c7cb_row39_col3" class="data row39 col3">White Chocolate (36% Cocoa Minimum, Pure Cocoa Butter), Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter): Cocoa Beans, Sugar, Cocoa Butter, Whole&nbsp;Milk&nbsp;Powder, Skimmed&nbsp;Milk&nbsp;Powder, Emulsifier: (Soya&nbsp;Lecithin), Vanilla Extract. Malt Ball Centres: Corn Syrup, Sugar, Dairy Blend (Whey,&nbsp;WheyProtein Concentrate), Malt Powder (Malted&nbsp;Barley,&nbsp;Wheat,&nbsp;Milk, Hydrolysed&nbsp;Wheat Gluten, Sodium Bicarbonate, Salt), Malted&nbsp;Barley, Emulsifier:&nbsp;Soya&nbsp;Lecithin; Salt. Cocoa Butter, E102, E129. Organic Peppermint Essential Oil. Gum Arabic.</td>
+<td id="T_8c7cb_row39_col4" class="data row39 col4">https://www.chocolate.co.uk/products/peppermint-malt-balls</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row40" class="row_heading level0 row40" data-quarto-table-cell-role="th">40</td>
+<td id="T_8c7cb_row40_col0" class="data row40 col0">Peppermint Swirl</td>
+<td id="T_8c7cb_row40_col1" class="data row40 col1">5</td>
+<td id="T_8c7cb_row40_col2" class="data row40 col2">5.712</td>
+<td id="T_8c7cb_row40_col3" class="data row40 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter) (65%), White Chocolate (36% Cocoa Minimum, Pure Cocoa Butter) (34.9%): Cocoa Beans, Sugar, Cocoa Butter, Whole Milk Powder, Skimmed Milk Powder, Emulsifier: (Soya Lecithin), Vanilla Extract. Organic Peppermint Essential Oil (0.1%).</td>
+<td id="T_8c7cb_row40_col4" class="data row40 col4">https://www.chocolate.co.uk/products/peppermint-swirl-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row41" class="row_heading level0 row41" data-quarto-table-cell-role="th">41</td>
+<td id="T_8c7cb_row41_col0" class="data row41 col0">Pistachio &amp; Cranberry</td>
+<td id="T_8c7cb_row41_col1" class="data row41 col1">5</td>
+<td id="T_8c7cb_row41_col2" class="data row41 col2">5.712</td>
+<td id="T_8c7cb_row41_col3" class="data row41 col3">White Chocolate (36% Cocoa Minimum, Pure Cocoa Butter): Sugar, Cocoa Butter, Whole Milk Powder, Emulsifier: Soya Lecithin, Natural Vanilla Flavouring. Organic Dried Cranberries (8%): Cranberries, Sugar, Vegetable Oil. Pistachios (4%).</td>
+<td id="T_8c7cb_row41_col4" class="data row41 col4">https://www.chocolate.co.uk/products/pistachio-cranberry-chocolate-bar</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row42" class="row_heading level0 row42" data-quarto-table-cell-role="th">42</td>
+<td id="T_8c7cb_row42_col0" class="data row42 col0">Pretzel Caramel</td>
+<td id="T_8c7cb_row42_col1" class="data row42 col1">5</td>
+<td id="T_8c7cb_row42_col2" class="data row42 col2">5.712</td>
+<td id="T_8c7cb_row42_col3" class="data row42 col3">Milk Chocolate (43% Cocoa Min, Pure Cocoa Butter, 19% Milk Solids) (91%): Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Beans, Emulsifier: (Soya Lecithin), Natural Vanilla Extract. Pretzel Pieces (7%): Wheat Flour, Sunflower Oil, Salt, Poppy Seeds, Malted Wheat Flour, Smoke Flavouring, Yeast, Acidity Regulator: Sodium hydroxide. Caramel Chips (2%): Sugar, Glucose Syrup, Sweetened Condensed Milk, Salted Butter, Water.</td>
+<td id="T_8c7cb_row42_col4" class="data row42 col4">https://www.chocolate.co.uk/products/pretzel-caramel-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row43" class="row_heading level0 row43" data-quarto-table-cell-role="th">43</td>
+<td id="T_8c7cb_row43_col0" class="data row43 col0">Roasted Almonds</td>
+<td id="T_8c7cb_row43_col1" class="data row43 col1">8</td>
+<td id="T_8c7cb_row43_col2" class="data row43 col2">9.1392</td>
+<td id="T_8c7cb_row43_col3" class="data row43 col3">No Ingredients</td>
+<td id="T_8c7cb_row43_col4" class="data row43 col4">https://www.chocolate.co.uk/products/cocoa-dusted-almonds</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row44" class="row_heading level0 row44" data-quarto-table-cell-role="th">44</td>
+<td id="T_8c7cb_row44_col0" class="data row44 col0">Rose &amp; Violet Creams</td>
+<td id="T_8c7cb_row44_col1" class="data row44 col1">12</td>
+<td id="T_8c7cb_row44_col2" class="data row44 col2">13.7088</td>
+<td id="T_8c7cb_row44_col3" class="data row44 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: Soya Lecithin, Natural Vanilla Extract. Sugar, Glucose Syrup, Water, Crystalise Rose &amp; Violet Pieces Pieces (Sugar, Acacia Gum, Natural Rose Flower, Natural Violet Flower, Colouring: E120, E132, E141, Aroma), Natural Flavouring</td>
+<td id="T_8c7cb_row44_col4" class="data row44 col4">https://www.chocolate.co.uk/products/rose-violet-creams</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row45" class="row_heading level0 row45" data-quarto-table-cell-role="th">45</td>
+<td id="T_8c7cb_row45_col0" class="data row45 col0">Salt Caramel Malt Balls</td>
+<td id="T_8c7cb_row45_col1" class="data row45 col1">9</td>
+<td id="T_8c7cb_row45_col2" class="data row45 col2">10.2816</td>
+<td id="T_8c7cb_row45_col3" class="data row45 col3">Milk Chocolate (75%) (39% Cocoa Solids, Pure Cocoa Butter, 19% Milk Solids): Sugar, Cocoa Butter,&nbsp;Whole&nbsp;Milk Powder, Cocoa Solids,&nbsp;Skimmed Milk, Whey (milk), Butter (milk),&nbsp;Emulsifier:&nbsp;Soya Lecithin, Emulsifier: Sunflower Lecithin, Flavourings. Malt Ball Centres (25%): Corn Syrup, Sugar, Dairy Blend (Whey,&nbsp;Whey&nbsp;Protein Concentrate), Malt Powder (Malted&nbsp;Barley,&nbsp;Wheat,&nbsp;Milk, Hydrolysed&nbsp;Wheat Gluten, Sodium Bicarbonate, Salt), Malted&nbsp;Barley, Emulsifier:&nbsp;Soya&nbsp;Lecithin. Salt, Gum Arabic.</td>
+<td id="T_8c7cb_row45_col4" class="data row45 col4">https://www.chocolate.co.uk/products/salt-caramel-malt-balls</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row46" class="row_heading level0 row46" data-quarto-table-cell-role="th">46</td>
+<td id="T_8c7cb_row46_col0" class="data row46 col0">Salt Caramelised Hazelnuts</td>
+<td id="T_8c7cb_row46_col1" class="data row46 col1">8</td>
+<td id="T_8c7cb_row46_col2" class="data row46 col2">9.1392</td>
+<td id="T_8c7cb_row46_col3" class="data row46 col3">Caramelised&nbsp;Hazelnuts&nbsp;(50%):&nbsp;Hazelnuts, Sugar. Milk chocolate (41% Cocoa Minimum, Pure Cocoa Butter, 19% Milk Solids) (49%): Sugar, Cocoa Butter,&nbsp;Milk&nbsp;Powder, Cocoa Beans, Emulsifier: (SoyaLecithin) Vanilla Extract. Cocoa Powder (1%)</td>
+<td id="T_8c7cb_row46_col4" class="data row46 col4">https://www.chocolate.co.uk/products/salt-caramelised-hazelnuts</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row47" class="row_heading level0 row47" data-quarto-table-cell-role="th">47</td>
+<td id="T_8c7cb_row47_col0" class="data row47 col0">Salted Caramel</td>
+<td id="T_8c7cb_row47_col1" class="data row47 col1">5</td>
+<td id="T_8c7cb_row47_col2" class="data row47 col2">5.712</td>
+<td id="T_8c7cb_row47_col3" class="data row47 col3">White Chocolate (32% Cocoa Minimum, Pure Cocoa Butter) (98%): Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Caramelised Sugar, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring, Salt. Sea Salt (2%).</td>
+<td id="T_8c7cb_row47_col4" class="data row47 col4">https://www.chocolate.co.uk/products/blonde-chocolate-sea-salt</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row48" class="row_heading level0 row48" data-quarto-table-cell-role="th">48</td>
+<td id="T_8c7cb_row48_col0" class="data row48 col0">Salted Caramel Florentines</td>
+<td id="T_8c7cb_row48_col1" class="data row48 col1">12</td>
+<td id="T_8c7cb_row48_col2" class="data row48 col2">13.7088</td>
+<td id="T_8c7cb_row48_col3" class="data row48 col3">Dark Chocolate (61% Cocoa Minimum, Pure Cocoa Butter): Cocoa Beans, Sugar, Cocoa Butter, Emulsifier:&nbsp;Soya&nbsp;lecithin, Natural Vanilla Extract,&nbsp;Flaked Almonds, Sugar,&nbsp;Hazelnuts,&nbsp;Butter&nbsp;(Milk),&nbsp;Cream (Milk), Sultanas (Sunflower Oil), Glucose syrup, Golden Syrup (Partially Inverted Refiner’s Syrup), Candied Mixed Peel (Orange Peel, Glucose Fructose Syrup, Lemon Peel), Sea Salt.</td>
+<td id="T_8c7cb_row48_col4" class="data row48 col4">https://www.chocolate.co.uk/products/salted-caramel-florentines</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row49" class="row_heading level0 row49" data-quarto-table-cell-role="th">49</td>
+<td id="T_8c7cb_row49_col0" class="data row49 col0">Salted Caramels Blonde Chocolate</td>
+<td id="T_8c7cb_row49_col1" class="data row49 col1">19</td>
+<td id="T_8c7cb_row49_col2" class="data row49 col2">21.7056</td>
+<td id="T_8c7cb_row49_col3" class="data row49 col3">White Chocolate (35% Cocoa Solids, Pure Cocoa Butter): Sugar, Cocoa Butter,&nbsp;Whole Milk Powder,&nbsp;Skimmed Milk,&nbsp;Whey (milk),&nbsp;Butter (milk), Emulsifier: (Soya Lecithin), Flavourings,&nbsp;Cream (milk),&nbsp;Golden Granulated Sugar, Glucose, Cocoa Butter, Butter (milk), Sea Salt 0.5%.</td>
+<td id="T_8c7cb_row49_col4" class="data row49 col4">https://www.chocolate.co.uk/products/salted-caramels-blonde-chocolate</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row50" class="row_heading level0 row50" data-quarto-table-cell-role="th">50</td>
+<td id="T_8c7cb_row50_col0" class="data row50 col0">Salted Caramels Dark Chocolate</td>
+<td id="T_8c7cb_row50_col1" class="data row50 col1">19</td>
+<td id="T_8c7cb_row50_col2" class="data row50 col2">21.7056</td>
+<td id="T_8c7cb_row50_col3" class="data row50 col3">Dark Chocolate (55% Cocoa Minimum, Pure Cocoa Butter), Sugar, Cocoa Beans, Emulsifier (Soya Lecithin), Natural Vanilla Extract. Cream, Sugar, Glucose, Butter, Cocoa Butter, Vanilla. Sea Salt. Cocoa Powder, E171, E172.</td>
+<td id="T_8c7cb_row50_col4" class="data row50 col4">https://www.chocolate.co.uk/products/salt-caramels-dark-chocolate</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row51" class="row_heading level0 row51" data-quarto-table-cell-role="th">51</td>
+<td id="T_8c7cb_row51_col0" class="data row51 col0">Salted Caramels Milk Chocolate</td>
+<td id="T_8c7cb_row51_col1" class="data row51 col1">19</td>
+<td id="T_8c7cb_row51_col2" class="data row51 col2">21.7056</td>
+<td id="T_8c7cb_row51_col3" class="data row51 col3">Milk Chocolate (37% Cocoa Minimum, Pure Cocoa Butter, 21% Milk Solids), Sugar, Cocoa Butter, Whole Milk Powder, Cocoa Mass, Emulsifier (Soya Lecithin), Natural Vanilla Extract. Cream, Sugar, Glucose, Butter, Cocoa Butter, Vanilla. Sea Salt. Cocoa Powder, E171.</td>
+<td id="T_8c7cb_row51_col4" class="data row51 col4">https://www.chocolate.co.uk/products/salt-caramels-milk-chocolate</td>
+</tr>
+<tr class="odd">
+<td id="T_8c7cb_level0_row52" class="row_heading level0 row52" data-quarto-table-cell-role="th">52</td>
+<td id="T_8c7cb_row52_col0" class="data row52 col0">Tea &amp; Biscuit</td>
+<td id="T_8c7cb_row52_col1" class="data row52 col1">5</td>
+<td id="T_8c7cb_row52_col2" class="data row52 col2">5.712</td>
+<td id="T_8c7cb_row52_col3" class="data row52 col3">Blonde Chocolate (63.72%) (Cocoa Butter, Sugar, Whole Milk Powder, Skimmed Milk Powder, Whey Powder, Butter, Emulsifier: (Soya Lecithin), Natural Vanilla Flavouring.) Dark Chocolate (34.26%) (Cocoa Beans, Sugar, Cocoa Butter, Emulsifier: Sunflower Lecithin, Vanilla Extract)&nbsp;Biscuit&nbsp;Pearls (1.97%) (Dark Chocolate Coating, White Chocolate Coating, Sugar, Cocoa Beans, Cocoa Butter,&nbsp;Biscuit&nbsp;Cereal (Wheat Flour, Sugar, Wheat Malt, Wheat Starch, Raising Agent: E500ii, Salt, Cocoa Butter, Natural Flavouring), Whole Milk Powder, Dried Skimmed Milk, Whey (Milk), Butter (Milk), Emulsifier: (Sunflower Lecithin), Maltodextrin, Glazing Agent: Shellac, Natural Vanilla Extract) Organic Bergamot Oil (0.05%).</td>
+<td id="T_8c7cb_row52_col4" class="data row52 col4">https://www.chocolate.co.uk/products/tea-biscuit-chocolate-bar</td>
+</tr>
+<tr class="even">
+<td id="T_8c7cb_level0_row53" class="row_heading level0 row53" data-quarto-table-cell-role="th">53</td>
+<td id="T_8c7cb_row53_col0" class="data row53 col0">Velvet White</td>
+<td id="T_8c7cb_row53_col1" class="data row53 col1">5</td>
+<td id="T_8c7cb_row53_col2" class="data row53 col2">5.712</td>
+<td id="T_8c7cb_row53_col3" class="data row53 col3">White Chocolate (100%): Sugar, Cocoa Butter, Whole Milk Powder, Emulsifier: Soya Lecithin, Natural Vanilla Flavouring.</td>
+<td id="T_8c7cb_row53_col4" class="data row53 col4">https://www.chocolate.co.uk/products/velvet-white-chocolate-bar</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="products-were-scraped" class="slide level2">
+<h2>Products were scraped</h2>
+<div id="4038d36d-48b9-4593-b94c-855838fbfa9a" class="cell" data-execution_count="29">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb9-2"><a href=""></a>page_counts <span class="op">=</span> [<span class="dv">24</span>, <span class="dv">24</span>, <span class="dv">16</span>]</span>
+<span id="cb9-3"><a href=""></a>plt.bar([<span class="st">'Page 1'</span>, <span class="st">'Page 2'</span>, <span class="st">'Page 3'</span>], page_counts, color<span class="op">=</span><span class="st">'chocolate'</span>)</span>
+<span id="cb9-4"><a href=""></a>plt.title(<span class="st">"Number of Products Scraped per Page"</span>)</span>
+<span id="cb9-5"><a href=""></a>plt.ylabel(<span class="st">"Product Count"</span>)</span>
+<span id="cb9-6"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="quarto_chocolate_products_pre_files/figure-revealjs/cell-8-output-1.png" class="r-stretch"></section>
+<section id="visualizing-price-distribution" class="slide level2">
+<h2>Visualizing Price Distribution</h2>
+<div id="109d078d-cc62-40f3-9d4e-734c3ac7d420" class="cell" data-execution_count="30">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">from</span> matplotlib.ticker <span class="im">import</span> MaxNLocator</span>
+<span id="cb10-2"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb10-3"><a href=""></a>sns.histplot(df[<span class="st">'Price ($)'</span>], bins<span class="op">=</span><span class="dv">10</span>, kde<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-4"><a href=""></a>plt.title(<span class="st">'Distribution of Product Prices ($)'</span>)</span>
+<span id="cb10-5"><a href=""></a>plt.xlabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb10-6"><a href=""></a>plt.ylabel(<span class="st">'Number of Products'</span>)</span>
+<span id="cb10-7"><a href=""></a>plt.gca().yaxis.set_major_locator(MaxNLocator(integer<span class="op">=</span><span class="va">True</span>))</span>
+<span id="cb10-8"><a href=""></a>plt.grid(<span class="va">True</span>)</span>
+<span id="cb10-9"><a href=""></a>plt.tight_layout()</span>
+<span id="cb10-10"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="quarto_chocolate_products_pre_files/figure-revealjs/cell-9-output-1.png" class="r-stretch"></section>
+<section id="missing-ingredients" class="slide level2">
+<h2>Missing Ingredients</h2>
+<div id="b742d5ac-08c3-44a7-91cf-d0ef024092d5" class="cell" data-execution_count="15">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>has_ingredients <span class="op">=</span> df[<span class="st">'Ingredients'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x <span class="op">!=</span> <span class="st">'No Ingredients'</span>).<span class="bu">sum</span>()</span>
+<span id="cb11-2"><a href=""></a>no_ingredients <span class="op">=</span> <span class="bu">len</span>(df) <span class="op">-</span> has_ingredients</span>
+<span id="cb11-3"><a href=""></a></span>
+<span id="cb11-4"><a href=""></a>plt.pie([has_ingredients, no_ingredients],</span>
+<span id="cb11-5"><a href=""></a>        labels<span class="op">=</span>[<span class="st">'Has Ingredients'</span>, <span class="st">'No Ingredients'</span>],</span>
+<span id="cb11-6"><a href=""></a>        colors<span class="op">=</span>[<span class="st">'green'</span>, <span class="st">'red'</span>],</span>
+<span id="cb11-7"><a href=""></a>        autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>)</span>
+<span id="cb11-8"><a href=""></a>plt.title(<span class="st">"Products with vs without Ingredients"</span>)</span>
+<span id="cb11-9"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="quarto_chocolate_products_pre_files/figure-revealjs/cell-10-output-1.png" class="r-stretch"></section>
+<section id="top-10-expensive-chocolates" class="slide level2">
+<h2>Top 10 Expensive Chocolates</h2>
+<div id="27573bb5-fc56-44e2-b2bc-01d54c4d38e9" class="cell" data-execution_count="31">
+<details class="code-fold">
+<summary>View Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>top_prices <span class="op">=</span> df.sort_values(by<span class="op">=</span><span class="st">'Price ($)'</span>, ascending<span class="op">=</span><span class="va">False</span>).head(<span class="dv">10</span>)</span>
+<span id="cb12-2"><a href=""></a></span>
+<span id="cb12-3"><a href=""></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span>
+<span id="cb12-4"><a href=""></a>plt.barh(top_prices[<span class="st">'Name'</span>], top_prices[<span class="st">'Price ($)'</span>].astype(<span class="bu">float</span>), color<span class="op">=</span><span class="st">'saddlebrown'</span>)</span>
+<span id="cb12-5"><a href=""></a>plt.xlabel(<span class="st">'Price in $'</span>)</span>
+<span id="cb12-6"><a href=""></a>plt.title(<span class="st">'Top 10 Most Expensive Products'</span>)</span>
+<span id="cb12-7"><a href=""></a>plt.gca().invert_yaxis()</span>
+<span id="cb12-8"><a href=""></a>plt.tight_layout()</span>
+<span id="cb12-9"><a href=""></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="quarto_chocolate_products_pre_files/figure-revealjs/cell-11-output-1.png" class="r-stretch"></section>
+<section id="thank-you" class="title-slide slide level1 center">
+<h1>THANK YOU !!!</h1>
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="quarto_chocolate_products_pre_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+            const codeEl = trigger.previousElementSibling.cloneNode(true);
+            for (const childEl of codeEl.children) {
+              if (isCodeAnnotation(childEl)) {
+                childEl.remove();
+              }
+            }
+            return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
